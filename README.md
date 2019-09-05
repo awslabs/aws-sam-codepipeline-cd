@@ -12,7 +12,7 @@ The pipeline has the following 5 stages:
 1. **Publish** (optional): This stage publishes the project to AWS Serverless Application Repository using the publish [app](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:077246666028:applications~aws-serverless-codepipeline-serverlessrepo-publish)
 
 Here is an example CodePipeline pipeline that has all 5 stages:
-![aws-sam-codepipeline-cd-pipeline-example](../../raw/master/images/aws-sam-codepipeline-cd-pipeline-example.png)
+![aws-sam-codepipeline-cd-pipeline-example](https://github.com/awslabs/aws-sam-codepipeline-cd/raw/master/images/aws-sam-codepipeline-cd-pipeline-example.png)
 
 ## Installation
 
@@ -25,7 +25,7 @@ Here is an example CodePipeline pipeline that has all 5 stages:
 
 General instructions for creating a GitHub OAuth token can be found [here](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/). When you get to the scopes/permissions page, you should select the "repo" and "admin:repo_hook" scopes, which will automatically select all permissions under those two scopes.
 
-![GitHub OAuth Token Permissions](../../raw/master/images/github-token-permissions.png)
+![GitHub OAuth Token Permissions](https://github.com/awslabs/aws-sam-codepipeline-cd/raw/master/images/github-token-permissions.png)
 
 ## Parameters
 
