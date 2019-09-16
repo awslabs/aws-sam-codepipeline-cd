@@ -12,8 +12,8 @@ Metadata:
     SpdxLicenseId: MIT-0
     Labels: [github, cd, codepipeline, continuous-deploy, sam]
     HomePageUrl: https://github.com/awslabs/aws-sam-codepipeline-cd
-    SemanticVersion: 0.1.1
-    SourceCodeUrl: https://github.com/awslabs/aws-sam-codepipeline-cd/tree/0.1.1
+    SemanticVersion: 0.1.2
+    SourceCodeUrl: https://github.com/awslabs/aws-sam-codepipeline-cd/tree/0.1.2
     LicenseUrl: ../../LICENSE
     ReadmeUrl: ../../README.md
 
@@ -235,6 +235,7 @@ Resources:
   PipelineRole:
     Type: AWS::IAM::Role
     Properties:
+      Description: !Sub "Used by CodePipeline ${Pipeline}. Created by CloudFormation ${AWS::StackId}"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -289,7 +290,6 @@ Resources:
                     - "cloudformation:CreateChangeSet"
                     - "cloudformation:ExecuteChangeSet"
                     - "cloudformation:DescribeChangeSet"
-                    - "cloudformation:DeleteChangeSet"
                   Resource:
                     - !Sub arn:${AWS::Partition}:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/${DeployStackName}/*
           - !Ref AWS::NoValue
@@ -398,6 +398,7 @@ Resources:
   BuildProjectRole:
     Type: AWS::IAM::Role
     Properties:
+      Description: !Sub "Used in CodeBuild project ${BuildProject}. Created by CloudFormation ${AWS::StackId}"
       AssumeRolePolicyDocument:
         Statement:
           - Action:
@@ -408,6 +409,21 @@ Resources:
                 - codebuild.amazonaws.com
         Version: '2012-10-17'
       Path: /service-role/
+  DeployStagePolicy:
+    Condtion: HasDeployStage
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: s3-access
+      Roles:
+        - !Ref DeployRoleName
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Action:
+              - s3:GetObject
+            Effect: Allow
+            Resource:
+              - !Sub arn:${AWS::Partition}:s3:::${Artifacts}/*
   SARPublishApp:
     Condition: HasPublishStage
     Type: 'AWS::Serverless::Application'
