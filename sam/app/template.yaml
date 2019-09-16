@@ -12,8 +12,8 @@ Metadata:
     SpdxLicenseId: MIT-0
     Labels: [github, cd, codepipeline, continuous-deploy, sam]
     HomePageUrl: https://github.com/awslabs/aws-sam-codepipeline-cd
-    SemanticVersion: 0.1.2
-    SourceCodeUrl: https://github.com/awslabs/aws-sam-codepipeline-cd/tree/0.1.2
+    SemanticVersion: 0.1.3
+    SourceCodeUrl: https://github.com/awslabs/aws-sam-codepipeline-cd/tree/0.1.3
     LicenseUrl: ../../LICENSE
     ReadmeUrl: ../../README.md
 
@@ -235,7 +235,7 @@ Resources:
   PipelineRole:
     Type: AWS::IAM::Role
     Properties:
-      Description: !Sub "Used by CodePipeline ${Pipeline}. Created by CloudFormation ${AWS::StackId}"
+      Description: !Sub "Used by CodePipeline. Created by CloudFormation ${AWS::StackId}"
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -366,7 +366,7 @@ Resources:
   CodeBuildPolicy:
     Type: AWS::IAM::Policy
     Properties:
-      PolicyName: codebuild-access
+      PolicyName: codebuild-access-${AWS::StackName}
       Roles:
         - !Ref BuildProjectRole
         - !If
@@ -398,7 +398,7 @@ Resources:
   BuildProjectRole:
     Type: AWS::IAM::Role
     Properties:
-      Description: !Sub "Used in CodeBuild project ${BuildProject}. Created by CloudFormation ${AWS::StackId}"
+      Description: !Sub "Used in CodeBuild project. Created by CloudFormation ${AWS::StackId}"
       AssumeRolePolicyDocument:
         Statement:
           - Action:
@@ -410,10 +410,10 @@ Resources:
         Version: '2012-10-17'
       Path: /service-role/
   DeployStagePolicy:
-    Condtion: HasDeployStage
+    Condition: HasDeployStage
     Type: AWS::IAM::Policy
     Properties:
-      PolicyName: s3-access
+      PolicyName: deploy-stage-access-${AWS::StackName}
       Roles:
         - !Ref DeployRoleName
       PolicyDocument:
