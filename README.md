@@ -52,6 +52,82 @@ The app has the following parameters:
 1. `PipelineName` - The CodePipeline pipeline name.
 1. `PipelineVersion` - The CodePipeline pipeline version.
 
+## IAM Roles in Test and Deploy stages
+
+IAM roles are required to provide in Test and Deploy stages. IAM policies will be attached to the provided IAM roles.
+
+### Test stage
+
+In test stage, the tests are run in CodeBuild. IAM policies are attached to the provided `IntegTestRole` to grant permissions to CodeBuild to:
+- Write logs to CloudWatch logs
+- Read artifacts from previous stage in S3 artifacts bucket.
+- Write artifacts to be used by later stage in S3 artifacts bucket.
+
+Here is the IAM policy that will be attached to the provided `IntegTestRole`:
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "arn:aws:logs:<region>:<account>:log-group:/aws/codebuild/*"
+            ],
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "s3:PutObject",
+                "s3:GetObject",
+                "s3:GetObjectVersion"
+            ],
+            "Resource": [
+                "arn:aws:s3:::<artifacts-bucket>/*"
+            ],
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::<artifacts-bucket>"
+            ],
+            "Effect": "Allow"
+        }
+    ]
+}
+```
+
+### Deploy stage
+
+In deploy stage, the application is deployed via CloudFormation. IAM policies are attached to the provided `DeployRole` to grant permissions to CloudFormation to:
+- Read artifacts from previous stage in S3 artifacts bucket.
+
+Here is the IAM policy that will be attached to the provided `DeployRole`:
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::<artifacts-bucket>/*"
+            ],
+            "Effect": "Allow"
+        }
+    ]
+}
+```
+
 ## License Summary
 
 This sample code is made available under the MIT-0 license. See the LICENSE file.
