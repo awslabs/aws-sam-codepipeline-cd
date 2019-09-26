@@ -4,7 +4,7 @@ This serverless app sets up an AWS CodePipeline pipeline as a Continuous Deploym
 
 ## Pipeline Structure
 
-When this module is deployed, it will create an AWS CodePipeline pipeline that has up to the following 5 stages:
+When this application is deployed, it will create an AWS CodePipeline pipeline that has up to the following 5 stages:
 1. **Source**: This stage is the entry point of the pipeline. It is triggered when you push a change to the specified GitHub respository branch.
 1. **Build**: This stage builds the project using AWS CodeBuild.
 1. **Test** (optional): This stage runs the integration tests of the project using CodeBuild. This stage will only be created if you provide the `IntegTestRoleName` parameter when setting up this module. See the "Parameters" section below.
