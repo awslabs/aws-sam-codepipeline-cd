@@ -2,7 +2,7 @@
 
 This serverless app sets up an AWS CodePipeline pipeline as a Continuous Deployment (CD) solution for a GitHub-based SAM project. Once setup, every time you push to the specified GitHub repository branch, the change will flow through the AWS CodePipeline pipeline.
 
-## Pipeline Structure Example
+## Pipeline Structure
 
 When this module is deployed, it will create an AWS CodePipeline pipeline that has up to the following 5 stages:
 1. **Source**: This stage is the entry point of the pipeline. It is triggered when you push a change to the specified GitHub respository branch.
