@@ -35,8 +35,8 @@ The app has the following parameters:
 1. `GitHubRepo` (required) - GitHub repo name (just the name, not the full URL).
 1. `GitHubOAuthToken` (required) - OAuth token used by AWS CodeBuild to connect to GitHub.
 1. `GitHubBranch` (optional) - GitHub repo branch name. Default: master
-1. `ComputeType` (optional) - AWS CodeBuild project compute type to use. See [the documentation] (https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli) for details. Default: BUILD_GENERAL1_SMALL
-1. `EnvironmentType` (optional) - Environment type used by AWS CodeBuild. See [the documentation] (https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli) for details. Default: LINUX_CONTAINER
+1. `ComputeType` (optional) - AWS CodeBuild project compute type to use. See [the documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli) for details. Default: BUILD_GENERAL1_SMALL
+1. `EnvironmentType` (optional) - Environment type used by AWS CodeBuild. See [the documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli) for details. Default: LINUX_CONTAINER
 1. `BuildSpecFilePath` (optional) - CodeBuild build spec file name for build stage. See [Build Specification Reference for CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html). Default: buildspec.yaml
 1. `IntegTestRoleName` (optional) - IAM role name for test stage. This role needs to be configured to allow codebuild.amazonaws.com and cloudformation.amazonaws.com to assume it. Test stage will not be added if default value is used. Default: ''
 1. `IntegTestBuildSpecFilePath` (optional) - CodeBuild build spec file name for test stage. This parameter is only used if you provide the `IntegTestRoleName` parameter. See [the documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html). Default: integ-test-buildspec.yaml
