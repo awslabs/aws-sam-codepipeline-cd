@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+       python: 3.7
+    commands:
+      - pip install cfn-lint
+  build:
+    commands:
+      - cfn-lint -t sam/app/template.yaml
+      - aws cloudformation package --template-file sam/app/template.yaml --s3-bucket ${PACKAGE_BUCKET} --output-template-file packaged-template.yaml
+artifacts:
+  files:
+    - packaged-template.yaml
