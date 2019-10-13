@@ -3,7 +3,9 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-       java: openjdk8 # Runtime version is required in the build spec even though this app does not use java
+       python: 3.7
+    commands:
+      - pip install cfn-lint
   build:
     commands:
-      - aws cloudformation validate-template --template-body file://./sam/app/template.yaml
+      - cfn-lint -t sam/app/template.yaml

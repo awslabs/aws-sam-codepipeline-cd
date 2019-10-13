@@ -203,7 +203,7 @@ Resources:
                   StackName: !Ref DeployStackName
                   TemplatePath: "BuildArtifact::packaged-template.yaml"
                   ChangeSetName: !Sub a-${DeployStackName}-Deploy
-                RunOrder: '1'
+                RunOrder: 1
               - Name: ExecuteChangeSet
                 ActionTypeId:
                   Category: Deploy
@@ -214,7 +214,7 @@ Resources:
                   ActionMode: CHANGE_SET_EXECUTE
                   StackName: !Ref DeployStackName
                   ChangeSetName: !Sub a-${DeployStackName}-Deploy
-                RunOrder: '2'
+                RunOrder: 2
           - !Ref AWS::NoValue
         - !If
           - HasPublishStage
@@ -230,7 +230,7 @@ Resources:
                   FunctionName: !GetAtt SARPublishApp.Outputs.ServerlessRepoPublishFunctionName
                 InputArtifacts:
                   - Name: BuildArtifact
-                RunOrder: '1'
+                RunOrder: 1
           - !Ref AWS::NoValue
   PipelineRole:
     Type: AWS::IAM::Role
@@ -345,7 +345,7 @@ Resources:
       TargetPipeline: !Ref Pipeline
       TargetAction: GitHubSource
       TargetPipelineVersion: !GetAtt Pipeline.Version
-      RegisterWithThirdParty: 'true'
+      RegisterWithThirdParty: true
   IntegrationTestsProject:
     Condition: HasTestStage
     Type: AWS::CodeBuild::Project
@@ -366,7 +366,7 @@ Resources:
   CodeBuildPolicy:
     Type: AWS::IAM::Policy
     Properties:
-      PolicyName: codebuild-access-${AWS::StackName}
+      PolicyName: !Sub codebuild-access-${AWS::StackName}
       Roles:
         - !Ref BuildProjectRole
         - !If
@@ -413,7 +413,7 @@ Resources:
     Condition: HasDeployStage
     Type: AWS::IAM::Policy
     Properties:
-      PolicyName: deploy-stage-access-${AWS::StackName}
+      PolicyName: !Sub deploy-stage-access-${AWS::StackName}
       Roles:
         - !Ref DeployRoleName
       PolicyDocument:
