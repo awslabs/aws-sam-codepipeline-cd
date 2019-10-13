@@ -1,0 +1,9 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+       java: openjdk8 # Runtime version is required in the build spec even though this app does not use java
+  build:
+    commands:
+      - aws cloudformation validate-template --template-body file://./sam/app/template.yaml
