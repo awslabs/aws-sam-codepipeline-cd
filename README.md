@@ -1,4 +1,4 @@
-# AWS SAM CodePipeline CD
+# AWS SAM CodePipeline CD ![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiSlYvZlpjVEttS0FjbXFyUEpvWFpwdGJtbTlSbjRTaEsranM4QjFpUWxUSTB4ZUdPeDROSlNTMW14bnRxM1l6YTRpUDZsSXg2L3hyRXpWN0ZxM1BpeGFBPSIsIml2UGFyYW1ldGVyU3BlYyI6Ik9pWWV1MXhKbnR6alB2NTUiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
 This serverless app sets up an AWS CodePipeline pipeline as a Continuous Deployment (CD) solution for a GitHub-based SAM project. Once setup, every time you push to the specified GitHub repository branch, the change will flow through the AWS CodePipeline pipeline.
 
