@@ -43,6 +43,13 @@ Parameters:
     Default: LINUX_CONTAINER
     Description: Environment type used by AWS CodeBuild. See the documentation for details (https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli).
     Type: String
+  SourceCodeProvider:
+    Type: String
+    Description: Location of your source code repository
+    Default: GitHub
+    AllowedValues:
+      - GitHub
+      - CodeCommit
   GitHubOAuthToken:
     Description: OAuth token used by AWS CodePipeline to connect to GitHub
     NoEcho: true
@@ -56,6 +63,13 @@ Parameters:
   GitHubBranch:
     Description: GitHub repo branch name. It defaults to master if not specified.
     Type: String
+    Default: master
+  CodeCommitRepoName:
+    Type: String
+    Description: CodeCommit repository name, only specify if you chose CodeCommit in SourceCodeProvider
+  CodeCommitBranch:
+    Type: String
+    Description: CodeCommit repository branch name, only specify if you chose CodeCommit in SourceCodeProvider.
     Default: master
   DeployParameterOverrides:
     Description: Parameter overrides for the deploy stage
@@ -103,6 +117,11 @@ Conditions:
     !Not [!Equals [!Ref DeployRoleName, '']]
   HasPublishStage:
     !Equals [!Ref PublishToSAR, 'true']
+  UseCodeCommit:
+    !Equals [!Ref SourceCodeProvider, 'CodeCommit']
+  UseGitHub:
+    !Equals [!Ref SourceCodeProvider, 'GitHub']
+
 Resources:
   Artifacts:
     Properties:
@@ -138,20 +157,33 @@ Resources:
       Stages:
         - Name: Source
           Actions:
-            - Name: GitHubSource
-              ActionTypeId:
-                Category: Source
-                Owner: ThirdParty
-                Provider: GitHub
-                Version: "1"
-              Configuration:
-                Owner: !Ref GitHubOwner
-                OAuthToken: !Ref GitHubOAuthToken
-                Repo: !Ref GitHubRepo
-                Branch: !Ref GitHubBranch
-                PollForSourceChanges: false
-              OutputArtifacts:
-                - Name: SourceArtifact
+            - !If
+              - UseCodeCommit
+              - Name: CodeCommitSource
+                ActionTypeId:
+                  Category: Source
+                  Owner: AWS
+                  Provider: CodeCommit
+                  Version: "1"
+                Configuration:
+                  RepositoryName: !Ref CodeCommitRepoName
+                  BranchName: !Ref CodeCommitBranch
+                OutputArtifacts:
+                  - Name: SourceArtifact
+              - Name: GitHubSource
+                ActionTypeId:
+                  Category: Source
+                  Owner: ThirdParty
+                  Provider: GitHub
+                  Version: "1"
+                Configuration:
+                  Owner: !Ref GitHubOwner
+                  OAuthToken: !Ref GitHubOAuthToken
+                  Repo: !Ref GitHubRepo
+                  Branch: !Ref GitHubBranch
+                  PollForSourceChanges: false
+                OutputArtifacts:
+                  - Name: SourceArtifact
         - Name: Build
           Actions:
             - Name: Build
@@ -317,6 +349,22 @@ Resources:
                   Resource:
                     - !Sub arn:${AWS::Partition}:iam::${AWS::AccountId}:role/${DeployRoleName}
           - !Ref AWS::NoValue
+        - !If
+          - UseCodeCommit
+          - PolicyName: codecommit-access
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - "codecommit:List*"
+                    - "codecommit:Get*"
+                    - "codecommit:GitPull"
+                    - "codecommit:UploadArchive"
+                    - "codecommit:CancelUploadArchive"
+                  Resource:
+                    - !Sub arn:${AWS::Partition}:codecommit:${AWS::Region}:${AWS::AccountId}:${CodeCommitRepoName}
+          - !Ref AWS::NoValue
   BuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -335,6 +383,7 @@ Resources:
             Value: !Ref Artifacts
   GitHubWebhook:
     Type: 'AWS::CodePipeline::Webhook'
+    Condition: UseGitHub
     Properties:
       AuthenticationConfiguration:
         SecretToken: !Ref GitHubOAuthToken
