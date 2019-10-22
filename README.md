@@ -33,7 +33,7 @@ The app has the following parameters:
 
 | Parameter     | Required      | Description   |
 | ------------- | ------------- | ------------- |
-| SourceCodeProvider  | Required  | Whether the Git repository is hosted on GitHub or CodeCommit. |
+| SourceCodeProvider  | Optional  | Whether the Git repository is hosted on GitHub or CodeCommit. Allowed values: GitHub, CodeCommit. Default: GitHub |
 | ComputeType  | Optional  | AWS CodeBuild project compute type. See [the documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli) for details. Default: BUILD_GENERAL1_SMALL |
 | EnvironmentType  | Optional  | Environment type used by AWS CodeBuild. See [the documentation](https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli) for details. Default: LINUX_CONTAINER |
 | BuildSpecFilePath  | Optional  | CodeBuild build spec file name for build stage. See [Build Specification Reference for CodeBuild](https://docs.aws.amazon.com/codebuild/latest/userguide/build-spec-ref.html). Default: buildspec.yaml |
