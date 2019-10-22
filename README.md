@@ -48,16 +48,16 @@ The following parameters are only applicable if `SourceCodeProvider` is GitHub.
 
 | Parameter     | Required      | Description   |
 | ------------- | ------------- | ------------- |
-| GitHubOwner  | Required  | GitHub username owning the repo. |
-| GitHubRepo  | Required  | GitHub repo name (just the name, not the full URL). |
-| GitHubOAuthToken  | Required  | OAuth token used by AWS CodeBuild to connect to GitHub. |
+| GitHubOwner  | Optional  | GitHub username owning the repo. |
+| GitHubRepo  | Optional  | GitHub repo name (just the name, not the full URL). |
+| GitHubOAuthToken  | Optional  | OAuth token used by AWS CodeBuild to connect to GitHub. |
 | GitHubBranch  | Optional  | GitHub repo branch name. Default: master. |
 
 The following parameters are only applicable if `SourceCodeProvider` is CodeCommit.
 
 | Parameter     | Required      | Description   |
 | ------------- | ------------- | ------------- |
-| CodeCommitRepoName  | Required  | CodeCommit repository name (just the name, not the full URL). |
+| CodeCommitRepoName  | Optional  | CodeCommit repository name (just the name, not the full URL). |
 | CodeCommitBranch  | Optional  | CodeCommit repo branch name. Default: master. |
 
 ## Outputs

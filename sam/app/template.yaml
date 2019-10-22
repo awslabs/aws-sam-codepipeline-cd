@@ -122,6 +122,26 @@ Conditions:
   UseGitHub:
     !Equals [!Ref SourceCodeProvider, 'GitHub']
 
+Rules:
+  ValidateGitHub:
+    RuleCondition: !Equals [!Ref SourceCodeProvider, 'GitHub']
+    Assertions:
+      - Assert: !Not [!Equals [!Ref GitHubOwner, '']]
+        AssertDescription: "GitHubOwner must be specified when SourceCodeProvider is GitHub"
+      - Assert: !Not [!Equals [!Ref GitHubRepo, '']]
+        AssertDescription: "GitHubRepo must be specified when SourceCodeProvider is GitHub"
+      - Assert: !Not [!Equals [!Ref GitHubOAuthToken, '']]
+        AssertDescription: "GitHubOAuthToken must be specified when SourceCodeProvider is GitHub"
+      - Assert: !Not [!Equals [!Ref GitHubBranch, '']]
+        AssertDescription: "GitHubBranch must be specified when SourceCodeProvider is GitHub"
+  ValidateCodeCommit:
+    RuleCondition: !Equals [!Ref SourceCodeProvider, 'CodeCommit']
+    Assertions:
+      - Assert: !Not [!Equals [!Ref CodeCommitRepoName, '']]
+        AssertDescription: "CodeCommitRepoName must be specified when SourceCodeProvider is CodeCommit"
+      - Assert: !Not [!Equals [!Ref CodeCommitBranch, '']]
+        AssertDescription: "CodeCommitBranch must be specified when SourceCodeProvider is CodeCommit"
+
 Resources:
   Artifacts:
     Properties:
