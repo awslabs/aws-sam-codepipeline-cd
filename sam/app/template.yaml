@@ -64,7 +64,7 @@ Parameters:
     Description: GitHub repo branch name. It defaults to master if not specified.
     Type: String
     Default: master
-  CodeCommitRepoName:
+  CodeCommitRepo:
     Type: String
     Description: CodeCommit repository name, only specify if you chose CodeCommit in SourceCodeProvider
   CodeCommitBranch:
@@ -137,8 +137,8 @@ Rules:
   ValidateCodeCommit:
     RuleCondition: !Equals [!Ref SourceCodeProvider, 'CodeCommit']
     Assertions:
-      - Assert: !Not [!Equals [!Ref CodeCommitRepoName, '']]
-        AssertDescription: "CodeCommitRepoName must be specified when SourceCodeProvider is CodeCommit"
+      - Assert: !Not [!Equals [!Ref CodeCommitRepo, '']]
+        AssertDescription: "CodeCommitRepo must be specified when SourceCodeProvider is CodeCommit"
       - Assert: !Not [!Equals [!Ref CodeCommitBranch, '']]
         AssertDescription: "CodeCommitBranch must be specified when SourceCodeProvider is CodeCommit"
 
@@ -186,7 +186,7 @@ Resources:
                   Provider: CodeCommit
                   Version: "1"
                 Configuration:
-                  RepositoryName: !Ref CodeCommitRepoName
+                  RepositoryName: !Ref CodeCommitRepo
                   BranchName: !Ref CodeCommitBranch
                 OutputArtifacts:
                   - Name: SourceArtifact
@@ -385,7 +385,7 @@ Resources:
                     - "codecommit:UploadArchive"
                     - "codecommit:CancelUploadArchive"
                   Resource:
-                    - !Sub arn:${AWS::Partition}:codecommit:${AWS::Region}:${AWS::AccountId}:${CodeCommitRepoName}
+                    - !Sub arn:${AWS::Partition}:codecommit:${AWS::Region}:${AWS::AccountId}:${CodeCommitRepo}
           - !Ref AWS::NoValue
   BuildProject:
     Type: AWS::CodeBuild::Project
