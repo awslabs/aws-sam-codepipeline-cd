@@ -54,12 +54,15 @@ Parameters:
     Description: OAuth token used by AWS CodePipeline to connect to GitHub
     NoEcho: true
     Type: String
+    Default: ''
   GitHubOwner:
     Description: GitHub username owning the repo
     Type: String
+    Default: ''
   GitHubRepo:
     Description: GitHub repo name
     Type: String
+    Default: ''
   GitHubBranch:
     Description: GitHub repo branch name. It defaults to master if not specified.
     Type: String
@@ -67,6 +70,7 @@ Parameters:
   CodeCommitRepo:
     Type: String
     Description: CodeCommit repository name, only specify if you chose CodeCommit in SourceCodeProvider
+    Default: ''
   CodeCommitBranch:
     Type: String
     Description: CodeCommit repository branch name, only specify if you chose CodeCommit in SourceCodeProvider.
