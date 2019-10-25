@@ -57,7 +57,7 @@ The following parameters are only applicable if `SourceCodeProvider` is CodeComm
 
 | Parameter     | Required      | Description   |
 | ------------- | ------------- | ------------- |
-| CodeCommitRepoName  | Optional  | CodeCommit repository name (just the name, not the full URL). |
+| CodeCommitRepo  | Optional  | CodeCommit repository name (just the name, not the full URL). |
 | CodeCommitBranch  | Optional  | CodeCommit repo branch name. Default: master. |
 
 ## Outputs
