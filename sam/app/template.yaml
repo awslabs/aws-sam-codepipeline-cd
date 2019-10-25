@@ -505,4 +505,4 @@ Resources:
     Properties:
       Location:
         ApplicationId: 'arn:aws:serverlessrepo:us-east-1:077246666028:applications/aws-serverless-codepipeline-serverlessrepo-publish'
-        SemanticVersion: 1.0.0
+        SemanticVersion: 1.0.1
