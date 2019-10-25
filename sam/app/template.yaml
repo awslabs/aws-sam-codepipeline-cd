@@ -12,8 +12,8 @@ Metadata:
     SpdxLicenseId: MIT-0
     Labels: [github, cd, codepipeline, continuous-deploy, sam]
     HomePageUrl: https://github.com/awslabs/aws-sam-codepipeline-cd
-    SemanticVersion: 1.0.0
-    SourceCodeUrl: https://github.com/awslabs/aws-sam-codepipeline-cd/tree/1.0.0
+    SemanticVersion: 1.1.0
+    SourceCodeUrl: https://github.com/awslabs/aws-sam-codepipeline-cd/tree/1.1.0
     LicenseUrl: ../../LICENSE
     ReadmeUrl: ../../README.md
 
