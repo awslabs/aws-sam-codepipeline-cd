@@ -43,6 +43,13 @@ Parameters:
     Default: LINUX_CONTAINER
     Description: Environment type used by AWS CodeBuild. See the documentation for details (https://docs.aws.amazon.com/codebuild/latest/userguide/create-project.html#create-project-cli).
     Type: String
+  PrivilegedMode:
+    AllowedValues:
+      - true
+      - false
+    Default: false
+    Description: Run build in privileged mode. Enables running the Docker daemon inside a Docker container See the documentation for details (https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-codebuild-project-environment.html#cfn-codebuild-project-environment-privilegedmode and https://docs.aws.amazon.com/codebuild/latest/userguide/troubleshooting.html)
+    Type: String
   SourceCodeProvider:
     Type: String
     Description: Location of your source code repository
@@ -125,6 +132,8 @@ Conditions:
     !Equals [!Ref SourceCodeProvider, 'CodeCommit']
   UseGitHub:
     !Equals [!Ref SourceCodeProvider, 'GitHub']
+  HasPrivilegedMode:
+    !Equals [!Ref PrivilegedMode, 'true']
 
 Rules:
   ValidateGitHub:
@@ -404,6 +413,8 @@ Resources:
         ComputeType: !Ref ComputeType
         Image: 'aws/codebuild/standard:2.0'
         Type: !Ref EnvironmentType
+        PrivilegedMode:
+          !If [HasPrivilegedMode, true, false]
         EnvironmentVariables:
           - Name: PACKAGE_BUCKET
             Value: !Ref Artifacts
@@ -435,6 +446,8 @@ Resources:
         ComputeType: !Ref ComputeType
         Image: 'aws/codebuild/standard:2.0'
         Type: !Ref EnvironmentType
+        PrivilegedMode:
+          !If [HasPrivilegedMode, true, false]
         EnvironmentVariables:
           - Name: PACKAGE_BUCKET
             Value: !Ref Artifacts
