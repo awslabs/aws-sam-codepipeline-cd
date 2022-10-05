@@ -19,7 +19,7 @@ Here is an example CodePipeline pipeline that has all 5 stages:
 1. [Create an AWS account](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html) if you do not already have one and login
 1. If your source code repository is on GitHub, then create a GitHub OAuth token (see instructions below). 
 1. Go to this app's page on the [Serverless Application Repository](https://serverlessrepo.aws.amazon.com/applications/arn:aws:serverlessrepo:us-east-1:646794253159:applications~aws-sam-codepipeline-cd) and click "Deploy"
-1. Provide the required app parameters and click "Deploy"
+1. Provide the required app parameters and click "deploy"
 
 ### Creating a GitHub OAuth token
 
