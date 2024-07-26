@@ -1,3 +1,19 @@
+ # :warning: Repository Deprecation Notice :warning:
+This repository, `awslabs/aws-sam-codepipeline-cd`, is scheduled for archival by the end of August 2024. After this date, the repository will become read-only, and no further updates or support will be provided.
+
+We recommend that you migrate to the AWS Serverless Application Model (SAM) CLI's `sam pipelines` command, which provides a streamlined and integrated experience for automatically generating deployment pipelines for your serverless applications.
+
+The `sam pipelines` command replaces the functionality provided by this repository and offers a more seamless and up-to-date solution. You can find detailed documentation and guidance on using sam pipelines at the following links:
+- [Introducing AWS SAM Pipelines: Automatically Generate Deployment Pipelines for Serverless Applications](https://aws.amazon.com/blogs/compute/introducing-aws-sam-pipelines-automatically-generate-deployment-pipelines-for-serverless-applications/)
+- [AWS SAM CLI Command Reference: sam pipeline bootstrap](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-pipeline-bootstrap.html)
+- [AWS SAM CLI Command Reference: sam pipeline init](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-pipeline-init.html)
+
+Please take the necessary steps to migrate your projects to the sam pipelines command before the end of August 2024. After this date, this repository will be archived, and no further updates or support will be provided. 
+
+Thank you for your understanding and cooperation.
+
+---
+
 # AWS SAM CodePipeline CD ![Build Status](https://codebuild.us-east-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiSlYvZlpjVEttS0FjbXFyUEpvWFpwdGJtbTlSbjRTaEsranM4QjFpUWxUSTB4ZUdPeDROSlNTMW14bnRxM1l6YTRpUDZsSXg2L3hyRXpWN0ZxM1BpeGFBPSIsIml2UGFyYW1ldGVyU3BlYyI6Ik9pWWV1MXhKbnR6alB2NTUiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
 
 This serverless app sets up an AWS CodePipeline pipeline as a Continuous Deployment (CD) solution for a SAM project hosted on GitHub or AWS CodeCommit. Once setup, every time you push to the specified Git repository branch, the change will flow through the AWS CodePipeline pipeline.
